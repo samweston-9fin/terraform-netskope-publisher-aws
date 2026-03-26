@@ -49,8 +49,8 @@ variable "ami_id" {
 }
 
 variable "iam_instance_profile" {
-  description = "IAM Instance Profile - IAM Role to allow SSM"
-  default     = ""
+  description = "IAM Instance Profile name to attach to the EC2 instance. When use_ssm is true and this is left null, an IAM role with the AmazonSSMManagedInstanceCore policy and a matching instance profile are created automatically."
+  default     = null
   type        = string
 }
 
@@ -63,11 +63,11 @@ variable "http_endpoint" {
 variable "http_tokens" {
   description = "Metadata Service V2 optional or reuqired - Use SSM set to required"
   type        = string
-  default     = "optional"
+  default     = "required"
 }
 
 variable "use_ssm" {
-  description = "Use SSM to Register Publisher - Use if http_tokens set to required - Must include IAM Instance Profile if used"
+  description = "Use SSM to register the Publisher instead of passing the token via user_data. Recommended when http_tokens is set to required (IMDSv2). When enabled without an iam_instance_profile, an IAM role and instance profile with AmazonSSMManagedInstanceCore are created automatically."
   type        = bool
-  default     = false
+  default     = true
 }

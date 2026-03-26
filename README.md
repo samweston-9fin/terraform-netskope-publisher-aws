@@ -73,16 +73,18 @@ module "publisher-aws" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.7 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
-| <a name="requirement_netskope"></a> [netskope](#requirement\_netskope) | 0.2.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.14.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
+| <a name="requirement_netskope"></a> [netskope](#requirement\_netskope) | ~> 0.3.2 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | ~> 0.13.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
-| <a name="provider_netskope"></a> [netskope](#provider\_netskope) | 0.2.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
+| <a name="provider_netskope"></a> [netskope](#provider\_netskope) | ~> 0.3.2 |
+| <a name="provider_time"></a> [time](#provider\_time) | ~> 0.13.1 |
 
 ## Modules
 
@@ -92,10 +94,16 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [aws_iam_instance_profile.ssm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) | resource |
+| [aws_iam_role.ssm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.ssm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_instance.NPAPublisher](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
 | [aws_ssm_association.register_publishers](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_association) | resource |
 | [aws_ssm_document.PublisherRegistration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_document) | resource |
-| netskope_publishers.Publisher | resource |
+| [netskope_npa_publisher.Publisher](https://registry.terraform.io/providers/netskopeoss/netskope/latest/docs/resources/npa_publisher) | resource |
+| [netskope_npa_publisher_token.Publisher](https://registry.terraform.io/providers/netskopeoss/netskope/latest/docs/resources/npa_publisher_token) | resource |
+| [time_rotating.Publisher_token](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/rotating) | resource |
+| [time_static.rotate](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/static) | resource |
 | [aws_ami.npa-publisher](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 
 ## Inputs
@@ -111,19 +119,15 @@ No modules.
 | <a name="input_aws_subnet"></a> [aws\_subnet](#input\_aws\_subnet) | AWS Subnet Id | `string` | n/a | yes |
 | <a name="input_ebs_optimized"></a> [ebs\_optimized](#input\_ebs\_optimized) | Enable EBS Optimized | `bool` | `true` | no |
 | <a name="input_http_endpoint"></a> [http\_endpoint](#input\_http\_endpoint) | Metadata Service enabled or disabled | `string` | `"enabled"` | no |
-| <a name="input_http_tokens"></a> [http\_tokens](#input\_http\_tokens) | Metadata Service V2 optional or reuqired - Use SSM set to required | `string` | `"optional"` | no |
-| <a name="input_iam_instance_profile"></a> [iam\_instance\_profile](#input\_iam\_instance\_profile) | IAM Instance Profile - IAM Role to allow SSM | `string` | `""` | no |
+| <a name="input_http_tokens"></a> [http\_tokens](#input\_http\_tokens) | Metadata Service V2 optional or reuqired - Use SSM set to required | `string` | `"required"` | no |
+| <a name="input_iam_instance_profile"></a> [iam\_instance\_profile](#input\_iam\_instance\_profile) | IAM Instance Profile name to attach to the EC2 instance. When use\_ssm is true and this is left null, an IAM role with the AmazonSSMManagedInstanceCore policy and a matching instance profile are created automatically. | `string` | `null` | no |
 | <a name="input_publisher_name"></a> [publisher\_name](#input\_publisher\_name) | Publisher Name | `string` | n/a | yes |
-| <a name="input_use_ssm"></a> [use\_ssm](#input\_use\_ssm) | Use SSM to Register Publisher - Use if http\_tokens set to required - Must include IAM Instance Profile if used | `bool` | `false` | no |
+| <a name="input_use_ssm"></a> [use\_ssm](#input\_use\_ssm) | Use SSM to register the Publisher instead of passing the token via user\_data. Recommended when http\_tokens is set to required (IMDSv2). When enabled without an iam\_instance\_profile, an IAM role and instance profile with AmazonSSMManagedInstanceCore are created automatically. | `bool` | `true` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ec2_instance_id"></a> [ec2\_instance\_id](#output\_ec2\_instance\_id) | ID of the EC2 Instance used for the Publisher |
 | <a name="output_publisher_id"></a> [publisher\_id](#output\_publisher\_id) | ID of the Publisher |
 | <a name="output_publisher_name"></a> [publisher\_name](#output\_publisher\_name) | Name of the Publisher |
-| <a name="output_publisher_private_ip"></a> [publisher\_private\_ip](#output\_publisher\_private\_ip) | Private IP of the Publisher |
-| <a name="output_publisher_public_ip"></a> [publisher\_public\_ip](#output\_publisher\_public\_ip) | Public IP of the Publisher |
-| <a name="output_publisher_token"></a> [publisher\_token](#output\_publisher\_token) | Public IP of the Publisher |
 <!-- END_TF_DOCS -->
