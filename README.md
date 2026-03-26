@@ -75,16 +75,16 @@ module "publisher-aws" {
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.14.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
-| <a name="requirement_netskope"></a> [netskope](#requirement\_netskope) | ~> 0.3.2 |
-| <a name="requirement_time"></a> [time](#requirement\_time) | ~> 0.13.1 |
+| <a name="requirement_netskope"></a> [netskope](#requirement\_netskope) | ~> 0.3.0 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | ~> 0.13.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
-| <a name="provider_netskope"></a> [netskope](#provider\_netskope) | ~> 0.3.2 |
-| <a name="provider_time"></a> [time](#provider\_time) | ~> 0.13.1 |
+| <a name="provider_netskope"></a> [netskope](#provider\_netskope) | ~> 0.3.0 |
+| <a name="provider_time"></a> [time](#provider\_time) | ~> 0.13.0 |
 
 ## Modules
 
@@ -128,6 +128,9 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_ec2_instance_id"></a> [ec2\_instance\_id](#output\_ec2\_instance\_id) | ID of the EC2 Instance used for the Publisher |
 | <a name="output_publisher_id"></a> [publisher\_id](#output\_publisher\_id) | ID of the Publisher |
 | <a name="output_publisher_name"></a> [publisher\_name](#output\_publisher\_name) | Name of the Publisher |
+| <a name="output_publisher_private_ip"></a> [publisher\_private\_ip](#output\_publisher\_private\_ip) | Private IP of the Publisher |
+| <a name="output_publisher_public_ip"></a> [publisher\_public\_ip](#output\_publisher\_public\_ip) | Public IP of the Publisher |
 <!-- END_TF_DOCS -->
